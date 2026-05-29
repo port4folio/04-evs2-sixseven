@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguridad LTDA - Registro de Ficha de Personal</title>
+</head>
+<link rel="stylesheet" href="styleregistro.css">
+<body>
+
+    <div class="container">
+        <!-- CABECERA DE LA PANTALLA -->
+        <div class="header">
+            <h1>Ficha Digital del Personal</h1>
+            <p>Módulo de Administración de Recursos Humanos (Back-Office) - Cobertura Nacional</p>
+        </div>
+
+        <div class="form-container">
+            <!-- Alerta de envío exitoso -->
+            <div id="toastSuccess" class="toast-success">
+                ✓ ¡Ficha de empleado validada y lista para ser guardada exitosamente!
+            </div>
+
+            <form id="employeeForm" onsubmit="validateForm(event)">
+                <div class="grid-layout">
+                    
+                    <!-- CRITERIO 1: Carga de fotografía de perfil -->
+                    <div class="photo-section">
+                        <div class="photo-preview" id="photoPreview">
+                            <span id="previewText">Sin fotografía<br>(Formatos JPG/PNG)</span>
+                            <img id="previewImg" src="" alt="Vista previa" style="display: none;">
+                        </div>
+                        <div class="file-input-wrapper">
+                            <button type="button" class="btn-upload">Examinar Imagen</button>
+                            <input type="file" id="employeePhoto" accept="image/png, image/jpeg" onchange="handlePhotoUpload(this)">
+                        </div>
+                        <div id="photoError" class="error-message">Por favor, cargue una fotografía.</div>
+                    </div>
+
+                    <!-- CAMPOS DEL FORMULARIO -->
+                    <div class="fields-section">
+                        
+                        <!-- Campo Nombre Completo -->
+                        <div class="form-group full-width">
+                            <label for="fullName">Nombre Completo<span class="required">*</span></label>
+                            <input type="text" id="fullName" placeholder="Ej: Juan Carlos Pérez">
+                            <div id="nameError" class="error-message">El nombre completo es requerido.</div>
+                        </div>
+
+                        <!-- CRITERIO 2: Campo RUT Obligatorio -->
+                        <div class="form-group">
+                            <label for="rut">RUT<span class="required">*</span></label>
+                            <input type="text" id="rut" placeholder="12.345.678-9" oninput="formatRut(this)">
+                            <div id="rutError" class="error-message">Debe ingresar un RUT válido (con guión y dígito verificador).</div>
+                        </div>
+
+                        <!-- CRITERIO 3: Campo Reloj Control -->
+                        <div class="form-group">
+                            <label for="clockId">ID Sistema Reloj Control<span class="required">*</span></label>
+                            <input type="text" id="clockId" placeholder="Ej: RC-2026-X">
+                            <div id="clockError" class="error-message">Debe asignar el identificador para el control de asistencia.</div>
+                        </div>
+
+                        <!-- CRITERIO 2: Campo AFP Obligatorio -->
+                        <div class="form-group">
+                            <label for="afp">Previsión (AFP)<span class="required">*</span></label>
+                            <select id="afp">
+                                <option value="">-- Seleccione AFP --</option>
+                                <option value="capital">AFP Capital</option>
+                                <option value="cuprum">AFP Cuprum</option>
+                                <option value="habitat">AFP Habitat</option>
+                                <option value="modelo">AFP Modelo</option>
+                                <option value="planvital">AFP Planvital</option>
+                                <option value="provida">AFP Provida</option>
+                                <option value="uno">AFP Uno</option>
+                            </select>
+                            <div id="afpError" class="error-message">Debe seleccionar una institución previsional.</div>
+                        </div>
+
+                        <!-- CRITERIO 2: Campo Isapre/Fonasa Obligatorio -->
+                        <div class="form-group">
+                            <label for="health">Sistema de Salud<span class="required">*</span></label>
+                            <select id="health">
+                                <option value="">-- Seleccione Salud --</option>
+                                <option value="fonasa">FONASA</option>
+                                <option value="banmedica">Isapre Banmédica</option>
+                                <option value="colmena">Isapre Colmena</option>
+                                <option value="consalud">Isapre Consalud</option>
+                                <option value="cruzblanca">Isapre CruzBlanca</option>
+                                <option value="nueva-masvida">Isapre Nueva Masvida</option>
+                            </select>
+                            <div id="healthError" class="error-message">Debe seleccionar un sistema de salud.</div>
+                        </div>
+
+                        <!-- Campo Centro de Costos -->
+                        <div class="form-group full-width">
+                            <label for="costCenter">Centro de Costos Asignado<span class="required">*</span></label>
+                            <select id="costCenter">
+                                <option value="">-- Seleccione Sucursal / Centro de Costo --</option>
+                                <option value="cc-stgo-01">Casa Central - Santiago Norte</option>
+                                <option value="cc-valpo-02">Sucursal Operativa - Valparaíso</option>
+                                <option value="cc-conco-03">Logística y Bodega - Concepción</option>
+                                <option value="cc-antof-04">Seguridad Industrial - Antofagasta</option>
+                            </select>
+                            <div id="costCenterError" class="error-message">Debe asignar un centro de costos operativo.</div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ACCIONES -->
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">Limpiar Formulario</button>
+                    <button type="submit" class="btn btn-primary">Registrar Colaborador</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- --- CONTROL FRONT-END (JAVASCRIPT) --- -->
+    <script>
+        // Manejo y Render de la fotografía (Criterio de Aceptación 1)
+        function handlePhotoUpload(input) {
+            const file = input.files[0];
+            const previewImg = document.getElementById('previewImg');
+            const previewText = document.getElementById('previewText');
+            const photoError = document.getElementById('photoError');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    previewImg.style.display = 'block';
+                    previewText.style.display = 'none';
+                    photoError.style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Formateador automático de RUT Chileno mientras se escribe
+        function formatRut(input) {
+            let value = input.value.replace(/\./g, '').replace('-', '');
+            if (value.match(/^0/)) {
+                value = value.substr(1);
+            }
+            if (value.length > 1) {
+                input.value = value.slice(0, -1) + '-' + value.slice(-1);
+            } else {
+                input.value = value;
+            }
+        }
+
+        // Función de Validación del Formulario (Criterio de Aceptación 2 y 3)
+        function validateForm(event) {
+            event.preventDefault(); // Evita que la página recargue simulando el backend
+            
+            let isValid = true;
+            
+            // Elementos de los campos
+            const fields = [
+                { id: 'fullName', errorId: 'nameError' },
+                { id: 'rut', errorId: 'rutError', regex: /^[0-9]+[-|‐][0-9kK]{1}$/ }, // Validación básica de estructura de RUT
+                { id: 'clockId', errorId: 'clockError' },
+                { id: 'afp', errorId: 'afpError' },
+                { id: 'health', errorId: 'healthError' },
+                { id: 'costCenter', errorId: 'costCenterError' }
+            ];
+
+            // Validar Inputs y Selects obligatorios
+            fields.forEach(field => {
+                const inputElement = document.getElementById(field.id);
+                const errorElement = document.getElementById(field.errorId);
+                
+                if (!inputElement.value.trim()) {
+                    errorElement.style.display = 'block';
+                    isValid = false;
+                } else if (field.regex && !field.regex.test(inputElement.value.trim())) {
+                    errorElement.style.display = 'block';
+                    isValid = false;
+                } else {
+                    errorElement.style.display = 'none';
+                }
+            });
+
+            // Validar que se haya subido foto de perfil
+            const photoInput = document.getElementById('employeePhoto');
+            const photoError = document.getElementById('photoError');
+            if (photoInput.files.length === 0) {
+                photoError.style.display = 'block';
+                isValid = false;
+            } else {
+                photoError.style.display = 'none';
+            }
+
+            // Si pasa todo el Front-end
+            if (isValid) {
+                const toast = document.getElementById('toastSuccess');
+                toast.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // Opcional: imprimir en consola la estructura JSON que iría al Back-office
+                console.log("Datos listos para enviar al backend:", {
+                    rut: document.getElementById('rut').value,
+                    nombre: document.getElementById('fullName').value,
+                    idRelojControl: document.getElementById('clockId').value,
+                    afp: document.getElementById('afp').value,
+                    salud: document.getElementById('health').value,
+                    centroCosto: document.getElementById('costCenter').value
+                });
+            }
+        }
+
+        // Resetear el formulario al estado original
+        function resetForm() {
+            document.getElementById('employeeForm').reset();
+            document.getElementById('previewImg').style.display = 'none';
+            document.getElementById('previewText').style.display = 'block';
+            document.getElementById('toastSuccess').style.display = 'none';
+            
+            const errors = document.querySelectorAll('.error-message');
+            errors.forEach(err => err.style.display = 'none');
+        }
+    </script>
+</body>
+</html>
