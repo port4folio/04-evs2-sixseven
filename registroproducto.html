@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Productos - Control de Inventario</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Catalogación Técnica de Insumos</h1>
+        <p>Rol: Encargado de Inventario</p>
+    </header>
+
+    <form id="productForm" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+            <label for="productCode">Código del Producto *</label>
+            <input 
+                type="text" 
+                id="productCode" 
+                name="productCode" 
+                required 
+                maxlength="20" 
+                pattern="[a-zA-Z0-9ñÑ]+" 
+                title="Solo se permiten letras y números (máximo 20 caracteres)"
+                placeholder="Ej: INSP2026X99"
+            >
+            <span class="help-text">Máximo 20 caracteres. Solo números y letras sin espacios.</span>
+        </div>
+
+        <div class="grid-3col">
+            <div class="form-group">
+                <label for="serialNumber">Nº de Serie</label>
+                <input type="text" id="serialNumber" name="serialNumber" placeholder="SN-000123">
+            </div>
+            <div class="form-group">
+                <label for="expiryDate">Vencimiento</label>
+                <input type="date" id="expiryDate" name="expiryDate">
+            </div>
+            <div class="form-group">
+                <label for="location">Ubicación</label>
+                <input type="text" id="location" name="location" placeholder="Pasillo A - Estante 3">
+            </div>
+        </div>
+
+        <div class="tabs-container">
+            <div class="tabs-header">
+                <button type="button" class="tab-btn active" onclick="openTab(event, 'tabStock')">Stock Óptimo</button>
+                <button type="button" class="tab-btn" onclick="openTab(event, 'tabBarcode')">Código de Barras</button>
+                <button type="button" class="tab-btn" onclick="openTab(event, 'tabPhoto')">Fotografía Técnica</button>
+            </div>
+
+            <div id="tabStock" class="tab-content active">
+                <div class="form-group">
+                    <label for="optimalStock">Definir Stock Óptimo</label>
+                    <input type="number" id="optimalStock" name="optimalStock" min="0" placeholder="Cantidad ideal en almacén">
+                </div>
+            </div>
+
+            <div id="tabBarcode" class="tab-content">
+                <div class="form-group">
+                    <label for="barcode">Código de Barras (EAN / UPC)</label>
+                    <input type="text" id="barcode" name="barcode" placeholder="7501234567890">
+                </div>
+            </div>
+
+            <div id="tabPhoto" class="tab-content">
+                <div class="form-group">
+                    <label for="techPhoto">Subir Fotografía Técnica del Insumo</label>
+                    <input type="file" id="techPhoto" name="techPhoto" accept="image/*">
+                    <span class="help-text">Formatos permitidos: JPG, PNG.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <button type="button" class="btn btn-secondary" onclick="checkRealTimeStock()">
+                🔍 Consultar Stock Real
+            </button>
+            <button type="submit" class="btn btn-primary">
+                Guardar Producto
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Lógica para alternar entre pestañas
+    function openTab(evt, tabId) {
+        const tabContents = document.getElementsByClassName("tab-content");
+        for (let i = 0; i < tabContents.length; i++) {
+            tabContents[i].classList.remove("active");
+        }
+
+        const tabBtns = document.getElementsByClassName("tab-btn");
+        for (let i = 0; i < tabBtns.length; i++) {
+            tabBtns[i].classList.remove("active");
+        }
+
+        document.getElementById(tabId).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+
+    // Consulta de Stock en Tiempo Real (Simulación)
+    function checkRealTimeStock() {
+        const code = document.getElementById('productCode').value.trim();
+        if (!code) {
+            alert("Por favor, ingrese el código del producto para consultar su disponibilidad en tiempo real.");
+            return;
+        }
+        
+        // Simulación de respuesta rápida de servidor
+        alert(`[Consulta Tiempo Real]\nCódigo: ${code}\nStock Disponible: 42 unidades.\nEstado: Nivel Estable.`);
+    }
+
+    // Manejo del Formulario al Guardar
+    function handleSubmit(event) {
+        event.preventDefault();
+        alert("Producto validado correctamente y registrado en el catálogo técnico.");
+    }
+</script>
+
+</body>
+</html>
