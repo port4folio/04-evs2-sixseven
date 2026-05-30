@@ -1,0 +1,229 @@
+/* --- ESTILOS CSS GENERALES (Base de tus compañeros) --- */
+:root {
+    --primary-color: #1e3a8a; /* Azul corporativo para Seguridad LTDA */
+    --secondary-color: #3b82f6;
+    --background-color: #f8fafc;
+    --card-background: #ffffff;
+    --text-color: #334155;
+    --border-color: #cbd5e1;
+    --success-color: #10b981;
+    --error-color: #ef4444;
+    --warning-color: #f59e0b; /* Añadido para desfases/atrasos */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background-color: var(--card-background);
+    width: 100%;
+    max-width: 900px; /* Ampliado un poco para que la tabla respire mejor */
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    border-top: 6px solid var(--primary-color);
+}
+
+/* Encabezado */
+.header {
+    background-color: #fafbfc;
+    padding: 25px 30px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header h1 {
+    font-size: 24px;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.header p {
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* Formulario */
+.form-container {
+    padding: 30px;
+}
+
+/* Subtítulos de Secciones */
+.section-title {
+    font-size: 16px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* --- GRIDS PERSONALIZADAS PARA TU MÓDULO --- */
+.grid-layout-turnos {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+@media (min-width: 600px) {
+    .grid-layout-turnos {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .full-width-custom {
+        grid-column: span 4;
+    }
+}
+
+.grid-layout-carga {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+@media (min-width: 600px) {
+    .grid-layout-carga {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+/* Grupos de Formulario estándar de tus compañeros */
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #475569;
+}
+
+.form-group label .required {
+    color: var(--error-color);
+    margin-left: 3px;
+}
+
+.form-group input, .form-group select {
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+    color: var(--text-color);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus, .form-group select:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Botones alineados a la derecha de cada bloque */
+.form-actions-inner {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+}
+
+/* Botones basados en las reglas de tus compañeros */
+.btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #172554;
+}
+
+/* --- ESTILOS DE LA TABLA DE DESFASES --- */
+.table-responsive-custom {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 14px;
+}
+
+.custom-table th {
+    background-color: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+    padding: 12px 16px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.custom-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.custom-table tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+.emp-name {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* Modificadores de colores semánticos alineados con :root */
+.text-success-custom { color: var(--success-color); }
+.text-warning-custom { color: var(--warning-color); }
+.text-error-custom { color: var(--error-color); }
+
+/* Badges / Etiquetas de Estado */
+.custom-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.custom-badge.badge-success {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.custom-badge.badge-warning {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.custom-badge.badge-danger {
+    background-color: #fee2e2;
+    color: #991b1b;
+}

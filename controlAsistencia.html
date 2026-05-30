@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Turnos y Marcaciones - Seguridad LTDA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="cssControl.css">
+</head>
+<body>
+
+    <div class="container">
+        
+        <header class="header">
+            <h1>Gestión de Turnos y Marcaciones</h1>
+            <p>Módulo de Recursos Humanos - Configuración de jornadas y contraste con Reloj Control</p>
+        </header>
+
+        <main class="form-container">
+            
+            <section class="mb-5">
+                <h2 class="section-title">Parametrización de Turno Laboral</h2>
+                
+                <div class="grid-layout-turnos">
+                    <div class="form-group full-width-custom">
+                        <label for="nombreTurno">Nombre del Turno <span class="required">*</span></label>
+                        <input type="text" id="nombreTurno" placeholder="Ej: Matutino General" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="horaEntrada">Hora Entrada <span class="required">*</span></label>
+                        <input type="time" id="horaEntrada" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="inicioColacion">Inicio Colación</label>
+                        <input type="time" id="inicioColacion">
+                    </div>
+                    <div class="form-group">
+                        <label for="finColacion">Fin Colación</label>
+                        <input type="time" id="finColacion">
+                    </div>
+                    <div class="form-group">
+                        <label for="horaSalida">Hora Salida <span class="required">*</span></label>
+                        <input type="time" id="horaSalida" required>
+                    </div>
+                </div>
+
+                <div class="form-actions-inner">
+                    <button type="button" class="btn btn-primary">
+                        Guardar Configuración
+                    </button>
+                </div>
+            </section>
+
+            <section class="mb-5">
+                <h2 class="section-title">Carga de Reloj Control</h2>
+                
+                <div class="grid-layout-carga">
+                    <div class="form-group">
+                        <label for="archivoReloj">Seleccionar Archivo (CSV / TXT) <span class="required">*</span></label>
+                        <input type="file" id="archivoReloj" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaProceso">Fecha de Proceso <span class="required">*</span></label>
+                        <input type="date" id="fechaProceso" required>
+                    </div>
+                </div>
+
+                <div class="form-actions-inner">
+                    <button type="button" class="btn btn-primary">
+                        Procesar y Contrastar
+                    </button>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="section-title">Análisis de Desfases y Asistencia</h2>
+                
+                <div class="table-responsive-custom">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Empleado</th>
+                                <th>Turno Asignado</th>
+                                <th>Marcación Real</th>
+                                <th>Desfase Calculado</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="emp-name">Juan Pérez</td>
+                                <td>08:00 - 17:00</td>
+                                <td>08:12</td>
+                                <td class="text-warning-custom font-weight-bold">+12 Min</td>
+                                <td><span class="custom-badge badge-warning">Atrasado</span></td>
+                            </tr>
+                            <tr>
+                                <td class="emp-name">María Soto</td>
+                                <td>08:00 - 17:00</td>
+                                <td>07:55</td>
+                                <td class="text-success-custom font-weight-bold">-5 Min</td>
+                                <td><span class="custom-badge badge-success">Puntual</span></td>
+                            </tr>
+                            <tr>
+                                <td class="emp-name">Carlos Díaz</td>
+                                <td>08:00 - 17:00</td>
+                                <td>--:--</td>
+                                <td class="text-error-custom font-weight-bold">N/A</td>
+                                <td><span class="custom-badge badge-danger">Ausente</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+</body>
+</html>
