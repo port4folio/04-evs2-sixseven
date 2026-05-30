@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguridad LTDA - Portal del Empleado: Vacaciones</title>
+    
+</head>
+<link rel="stylesheet" href="stylevacaciones.css">
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Solicitud de Vacaciones</h1>
+            <p>Portal del Empleado (Front-Office) - Módulo de Autoservicio</p>
+        </div>
+
+        <div class="form-container">
+            <div id="toastSuccess" class="toast-success">
+                ✓ ¡Solicitud registrada correctamente! Se ha gatillado una alerta automática enviando el rango de fechas y los días hábiles calculados al Módulo Central de RR.HH. para su evaluación.
+            </div>
+
+            <form id="vacationForm" onsubmit="validateForm(event)">
+                <div class="grid-layout">
+                    
+                    <div class="days-status-section">
+                        <h3>Resumen de Días</h3>
+                        <div class="stat-box">
+                            <span>Correspondientes:</span>
+                            <div class="number" id="daysTotal">15.0</div>
+                        </div>
+                        <div class="stat-box">
+                            <span>Días Tomados:</span>
+                            <div class="number" id="daysTaken">5.0</div>
+                        </div>
+                        <div class="stat-box highlight">
+                            <span>Saldo Pendiente:</span>
+                            <div class="number" id="daysPending">10.0</div>
+                        </div>
+                    </div>
+
+                    <div class="fields-section">
+                        
+                        <div class="form-group">
+                            <label for="startDate">Fecha de Inicio<span class="required">*</span></label>
+                            <input type="date" id="startDate" onchange="calculateBusinessDays()">
+                            <div id="startDateError" class="error-message">La fecha de inicio es requerida.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="endDate">Fecha de Término<span class="required">*</span></label>
+                            <input type="date" id="endDate" onchange="calculateBusinessDays()">
+                            <div id="endDateError" class="error-message">La fecha de término es requerida o inválida.</div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="businessDays">Días Hábiles Solicitados</label>
+                            <input type="text" id="businessDays" value="0" readonly style="background-color: #f1f5f9; font-weight: bold; color: var(--primary-color);">
+                            <div id="daysLimitError" class="error-message">Los días solicitados superan tu saldo pendiente actual.</div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="reason">Motivo del Descanso<span class="required">*</span></label>
+                            <textarea id="reason" placeholder="Escriba brevemente el motivo de su solicitud (ej: Vacaciones anuales, descanso familiar, etc.)"></textarea>
+                            <div id="reasonError" class="error-message">El motivo es requerido para procesar la solicitud.</div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Enviar a Jefatura y RR.HH.</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Lógica de cálculo automático de días hábiles entre fechas (Lunes a Viernes)
+        function calculateBusinessDays() {
+            const startInput = document.getElementById('startDate').value;
+            const endInput = document.getElementById('endDate').value;
+            const businessDaysInput = document.getElementById('businessDays');
+            const endDateError = document.getElementById('endDateError');
+            const daysLimitError = document.getElementById('daysLimitError');
+
+            if (!startInput || !endInput) return;
+
+            const start = new Date(startInput);
+            const end = new Date(endInput);
+
+            // Validación básica de coherencia de fechas
+            if (end < start) {
+                endDateError.textContent = "La fecha de término no puede ser menor a la de inicio.";
+                endDateError.style.display = "block";
+                businessDaysInput.value = 0;
+                return;
+            } else {
+                endDateError.style.display = "none";
+            }
+
+            let count = 0;
+            let current = new Date(start);
+
+            // Iteración para contar solo días de semana (Lunes-Viernes)
+            while (current <= end) {
+                const dayOfWeek = current.getDay();
+                // 0 = Domingo, 6 = Sábado. Días hábiles = 1,2,3,4,5
+                if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+                    count++;
+                }
+                current.setDate(current.getDate() + 1);
+            }
+
+            businessDaysInput.value = count;
+
+            // Validar si el cálculo excede el saldo pendiente (10 días)
+            const pendingDays = parseFloat(document.getElementById('daysPending').textContent);
+            if (count > pendingDays) {
+                daysLimitError.style.display = "block";
+            } else {
+                daysLimitError.style.display = "none";
+            }
+        }
+
+        // Función de Validación y Gatillado del Criterio 2
+        function validateForm(event) {
+            event.preventDefault(); // Detiene el envío real
+            
+            let isValid = true;
+            const pendingDays = parseFloat(document.getElementById('daysPending').textContent);
+            const businessDaysCount = parseInt(document.getElementById('businessDays').value);
+
+            // Estructura de campos obligatorios
+            const validations = [
+                { id: 'startDate', errorId: 'startDateError' },
+                { id: 'endDate', errorId: 'endDateError' },
+                { id: 'reason', errorId: 'reasonError' }
+            ];
+
+            validations.forEach(field => {
+                const element = document.getElementById(field.id);
+                const errorElement = document.getElementById(field.errorId);
+
+                if (!element.value.trim()) {
+                    errorElement.textContent = "Este campo es requerido.";
+                    errorElement.style.display = "block";
+                    isValid = false;
+                } else {
+                    errorElement.style.display = "none";
+                }
+            });
+
+            // Evitar procesar si los días solicitados son 0 o exceden el saldo
+            if (businessDaysCount <= 0) {
+                isValid = false;
+            }
+            if (businessDaysCount > pendingDays) {
+                document.getElementById('daysLimitError').style.display = "block";
+                isValid = false;
+            }
+
+            // CRITERIO 2: Al pasar validaciones, gatilla la alerta con los datos hacia RR.HH.
+            if (isValid) {
+                const toast = document.getElementById('toastSuccess');
+                toast.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                // Imprime en consola simulando la integración técnica del mensaje enviado
+                console.log("EVENTO TRIGGER GATILLADO HACIA BACK-OFFICE (RR.HH.):", {
+                    rangoFechas: {
+                        desde: document.getElementById('startDate').value,
+                        hasta: document.getElementById('endDate').value
+                    },
+                    totalDiasHabiles: businessDaysCount,
+                    motivo: document.getElementById('reason').value,
+                    timestampAlerta: new Date().toISOString()
+                });
+            }
+        }
+
+        // Restablecer el formulario al estado base
+        function resetForm() {
+            document.getElementById('vacationForm').reset();
+            document.getElementById('toastSuccess').style.display = 'none';
+            document.getElementById('businessDays').value = 0;
+            
+            const errors = document.querySelectorAll('.error-message');
+            errors.forEach(err => err.style.display = 'none');
+        }
+    </script>
+</body>
+</html>
