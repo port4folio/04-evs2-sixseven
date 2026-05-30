@@ -1,0 +1,320 @@
+:root {
+    --primary-color: #0284c7;
+    --primary-hover: #0369a1;
+    --secondary-color: #64748b;
+    --secondary-hover: #475569;
+    --bg-color: #f8fafc;
+    --card-bg: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --success-bg: #dcfce7;
+    --success-text: #15803d;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    padding: 30px 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 850px;
+}
+
+header {
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+}
+
+header p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-top: 4px;
+}
+
+/* Cajas de Secciones */
+.section-box {
+    background: var(--card-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.section-header {
+    margin-bottom: 20px;
+}
+
+.section-header h2 {
+    font-size: 1.3rem;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* Filtros */
+.filter-bar {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-bar label {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.filter-bar select {
+    padding: 6px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: white;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+/* Tablas de Documentos */
+.doc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.doc-table th, .doc-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.doc-table th {
+    background-color: #f1f5f9;
+    font-weight: 600;
+    color: #475569;
+}
+
+.doc-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Badges de Estado */
+.badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-success {
+    background-color: var(--success-bg);
+    color: var(--success-text);
+}
+
+/* Tarjeta de Certificados */
+.certificate-card {
+    border: 1px solid var(--border-color);
+    background-color: #f8fafc;
+    border-radius: 6px;
+    padding: 20px;
+    display: table;
+    width: 100%;
+}
+
+.cert-info {
+    display: table-cell;
+    width: 70%;
+    vertical-align: middle;
+    padding-right: 20px;
+}
+
+.cert-info h3 {
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+}
+
+.cert-info p {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.4;
+}
+
+.cert-actions {
+    display: table-cell;
+    width: 30%;
+    vertical-align: middle;
+}
+
+/* Botones */
+.btn {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-align: center;
+    display: inline-block;
+}
+
+.btn-small {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    margin: 0 2px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: var(--secondary-hover);
+}
+
+.btn-full {
+    display: block;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.btn-full:last-child {
+    margin-bottom: 0;
+}
+
+.help-text {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 5px;
+    display: block;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+/* --- Modal Estilos --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    width: 90%;
+    max-width: 550px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.modal-header {
+    background-color: #f1f5f9;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+}
+
+.modal-header h3 {
+    font-size: 1.1rem;
+}
+
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 12px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+.modal-body {
+    padding: 25px 20px;
+}
+
+.pdf-placeholder {
+    border: 2px dashed #cbd5e1;
+    background-color: #f8fafc;
+    padding: 30px;
+    text-align: center;
+    border-radius: 6px;
+    color: #475569;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid var(--border-color);
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* --- Reglas de impresión nativa por CSS --- */
+@media print {
+    body {
+        background: white;
+        color: black;
+        padding: 0;
+    }
+    .filter-bar, .btn, .close-modal, .modal-footer, header p {
+        display: none !important;
+    }
+    .section-box {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        margin-bottom: 40px;
+    }
+    .modal {
+        position: relative;
+        display: block !important;
+        background: none;
+    }
+    .modal-content {
+        box-shadow: none;
+        margin: 0;
+        max-width: 100%;
+    }
+}
