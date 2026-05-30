@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguridad LTDA - Solicitud de Pedidos</title>
+    <link rel="stylesheet" href="styleBuscador.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Realizar Pedido Oportuno</h1>
+        <p>Utiliza el buscador predictivo para añadir ítems verificando la disponibilidad sincronizada con las bodegas.</p>
+    </div>
+
+    <div class="form-container">
+        <form action="#" method="POST">
+            
+            <div class="section-title">Búsqueda de Catálogo</div>
+
+            <div class="form-group">
+                <label for="productSearch">Escriba el nombre o código del producto <span class="required">*</span></label>
+                <input 
+                    type="text" 
+                    id="productSearch" 
+                    list="productosBodega" 
+                    placeholder="Escriba para filtrar... (ej. Pack, PROMO, ALM)" 
+                    required
+                >
+                
+                <datalist id="productosBodega">
+                    <option value="PROMO-001 - Pack Frutas de Estación (Disponibilidad Alta)"></option>
+                    <option value="PROMO-002 - Pack Verduras Surtidas (Últimas Unidades)"></option>
+                    <option value="PROMO-003 - Bolsa de Pan Artesanal (Sin Stock)"></option>
+                    <option value="ALM-102 - Yogurt Natural Pack x4 (Disponibilidad Alta)"></option>
+                    <option value="ALM-105 - Leche Entera Soprole 1L (Disponibilidad Alta)"></option>
+                    <option value="CONF-401 - Galletas de Avena Orgánicas (Últimas Unidades)"></option>
+                    <option value="CONF-402 - Mermelada de Frambuesa Casera (Sin Stock)"></option>
+                </datalist>
+            </div>
+
+            <div class="form-group">
+                <label for="cantidad">Cantidad a solicitar</label>
+                <input type="number" id="cantidad" min="1" value="1">
+            </div>
+
+            <div class="section-title">Disponibilidad Actual en Bodegas (Sincronizado)</div>
+            <div class="table-responsive-custom">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Descripción del Producto</th>
+                            <th>Estado de Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>PROMO-001</code></td>
+                            <td>Pack Frutas de Estación</td>
+                            <td><span class="custom-badge badge-success">45 Disponibles</span></td>
+                        </tr>
+                        <tr>
+                            <td><code>PROMO-002</code></td>
+                            <td>Pack Verduras Surtidas</td>
+                            <td><span class="custom-badge badge-warning">Últimas 3 Unidades</span></td>
+                        </tr>
+                        <tr>
+                            <td><code>PROMO-003</code></td>
+                            <td>Bolsa de Pan Artesanal</td>
+                            <td><span class="custom-badge badge-danger">Sin Stock</span></td>
+                        </tr>
+                        <tr>
+                            <td><code>ALM-102</code></td>
+                            <td>Yogurt Natural Pack x4</td>
+                            <td><span class="custom-badge badge-success">18 Disponibles</span></td>
+                        </tr>
+                        <tr>
+                            <td><code>CONF-401</code></td>
+                            <td>Galletas de Avena Orgánicas</td>
+                            <td><span class="custom-badge badge-warning">Últimas 8 Unidades</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="form-actions-inner">
+                <button type="submit" class="btn btn-primary">Agregar al Pedido</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
