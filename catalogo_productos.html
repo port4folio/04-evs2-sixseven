@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Productos - Portal Cliente | Seguridad LTDA</title>
+    <link rel="stylesheet" href="styles_catalogo_productos.css">
+</head>
+<body>
+
+    <div class="container" style="max-width: 950px;">
+        <div class="header">
+            <h1>Catálogo de Productos</h1>
+            <p>Portal del Cliente: Busque, filtre y gestione sus pedidos con seguimiento de inventario en tiempo real.</p>
+        </div>
+
+        <div class="form-container">
+            
+            <div style="margin-bottom: 25px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px;">
+                <h3 style="color: var(--primary-color); font-size: 16px; margin-bottom: 15px;">Búsqueda Avanzada</h3>
+                <div class="fields-section">
+                    
+                    <div class="form-group full-width">
+                        <label for="buscador">Buscar producto <span class="required">*</span></label>
+                        <input type="text" id="buscador" placeholder="Ingrese palabra clave o código de producto (Ej. Cámara IP, BGA-001)...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="categoria">Categoría</label>
+                        <select id="categoria">
+                            <option value="todas" selected>Todas las categorías</option>
+                            <option value="cctv">Sistemas CCTV</option>
+                            <option value="acceso">Control de Acceso</option>
+                            <option value="alarmas">Alarmas Inalámbricas</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="marca">Marca</label>
+                        <select id="marca">
+                            <option value="todas" selected>Todas las marcas</option>
+                            <option value="hikvision">Hikvision</option>
+                            <option value="dahua">Dahua</option>
+                            <option value="dsc">DSC</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-actions" style="margin-top: 15px; padding-top: 0; border: none;">
+                    <button type="button" class="btn btn-secondary">Limpiar Filtros</button>
+                    <button type="button" class="btn btn-primary">Buscar Productos</button>
+                </div>
+            </div>
+
+            <h3 style="color: var(--primary-color); font-size: 16px; margin-bottom: 15px;">Resultados (Mostrando inventario en tiempo real)</h3>
+            
+            <div class="fields-section">
+                
+                <div class="photo-section" style="align-items: flex-start; justify-content: space-between; width: 100%;">
+                    <div style="display: flex; gap: 15px; width: 100%;">
+                        <div class="photo-preview" style="width: 80px; height: 80px; border-radius: 8px; flex-shrink: 0;">
+                            <span>Foto<br>CCTV</span>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="color: var(--text-color); margin-bottom: 5px; font-size: 15px;">Cámara Domo PTZ 360°</h4>
+                            <p style="font-size: 12px; color: #64748b; margin-bottom: 8px;">Marca: Hikvision | Cód: CAM-PTZ-01</p>
+                            <p style="font-size: 13px; font-weight: 600; color: var(--success-color); margin-bottom: 5px;">✓ 45 Unidades en Stock (Inmediato)</p>
+                        </div>
+                    </div>
+                    
+                    <div style="width: 100%; margin-top: 15px; display: flex; gap: 10px; border-top: 1px solid #e2e8f0; padding-top: 15px;">
+                        <button class="btn btn-secondary" style="padding: 8px 12px; font-size: 12px; width: 50%;">Ver Detalles (Video/Ficha)</button>
+                        <button class="btn btn-primary" style="padding: 8px 12px; font-size: 12px; width: 50%;">Añadir al Carro</button>
+                    </div>
+                </div>
+
+                <div class="photo-section" style="align-items: flex-start; justify-content: space-between; width: 100%;">
+                    <div style="display: flex; gap: 15px; width: 100%;">
+                        <div class="photo-preview" style="width: 80px; height: 80px; border-radius: 8px; flex-shrink: 0;">
+                            <span>Foto<br>Acceso</span>
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="color: var(--text-color); margin-bottom: 5px; font-size: 15px;">Lector Biométrico Huella/Tarjeta</h4>
+                            <p style="font-size: 12px; color: #64748b; margin-bottom: 8px;">Marca: ZKTeco | Cód: BIO-ACC-02</p>
+                            <p style="font-size: 13px; font-weight: 600; color: #d97706; margin-bottom: 5px;">⚠ Bajo Stock (Solo 2 unidades)</p>
+                        </div>
+                    </div>
+                    
+                    <div style="width: 100%; margin-top: 15px; display: flex; gap: 10px; border-top: 1px solid #e2e8f0; padding-top: 15px;">
+                        <button class="btn btn-secondary" style="padding: 8px 12px; font-size: 12px; width: 50%;">Ver Detalles (Video/Ficha)</button>
+                        <button class="btn btn-primary" style="padding: 8px 12px; font-size: 12px; width: 50%;">Añadir al Carro</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
